@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using GameTemplate.Scripts.Systems.CursorLock;
 using TMPro;
+using VContainer;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -88,6 +90,14 @@ namespace StarterAssets
         private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
+        
+        private CursorLocker _cursorLocker;
+
+        [Inject]
+        public void Construct(CursorLocker cursorLocker)
+        {
+            _cursorLocker = cursorLocker;
+        }
 
         private bool IsCurrentDeviceMouse
         {
@@ -127,6 +137,9 @@ namespace StarterAssets
 
         private void Update()
         {
+            if (_cursorLocker.ActiveState == CursorLocker.CursorState.Unlocked)
+                return;
+            
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -134,6 +147,9 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            if (_cursorLocker.ActiveState == CursorLocker.CursorState.Unlocked)
+                return;
+            
             CameraRotation();
         }
 

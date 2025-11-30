@@ -1,5 +1,6 @@
 using DayNightCycle;
 using GameTemplate.Scripts.Systems.Audio;
+using GameTemplate.Scripts.Systems.CursorLock;
 using GameTemplate.Scripts.UI.Game;
 using GameTemplate.Scripts.UI.Game.EscapeMenu;
 using VContainer;
@@ -14,6 +15,8 @@ namespace GameTemplate.Scripts.Scopes
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
+
+            builder.Register<CursorLocker>(Lifetime.Scoped);
             
             builder.RegisterComponentInHierarchy<GameCanvasView>();
             builder.RegisterEntryPoint<GameCanvasController>();

@@ -1,4 +1,5 @@
 using System;
+using GameTemplate.Scripts.Systems.CursorLock;
 using GameTemplate.Scripts.Systems.Input;
 using GameTemplate.Scripts.Systems.SaveLoad;
 using GameTemplate.Scripts.Systems.Scene;
@@ -15,13 +16,14 @@ namespace GameTemplate.Scripts.UI.Game.EscapeMenu
         private SaveLoadSystem _saveLoadSystem;
         private SettingsController _settingsController;
         private ISceneService _sceneService;
+        private CursorLocker _cursorLocker;
         
         private Controls _controls;
         public bool _isMenuOpen = false;
 
         [Inject]
         public void Construct(Controls controls, EscapeCanvasView view, SaveLoadSystem saveLoadSystem,
-            SettingsController settingsController, ISceneService sceneService)
+            SettingsController settingsController, ISceneService sceneService, CursorLocker cursorLocker)
         {
             _controls = controls;
             _controls.Enable();
@@ -29,6 +31,7 @@ namespace GameTemplate.Scripts.UI.Game.EscapeMenu
             _saveLoadSystem = saveLoadSystem;
             _settingsController = settingsController;
             _sceneService = sceneService;
+            _cursorLocker = cursorLocker;
         }
         
         public void Start()
@@ -42,12 +45,15 @@ namespace GameTemplate.Scripts.UI.Game.EscapeMenu
             _view.quitButton.onClick.AddListener(QuitGame);
             
             _controls.UI.Cancel.performed += ctx => ToggleMenu();
+            
+            _cursorLocker.SetCursorLock(true);
         }
 
         private void ToggleMenu()
         {
             _isMenuOpen = !_isMenuOpen;
             _view.ShowHideMenu(_isMenuOpen);
+            _cursorLocker.SetCursorLock(!_isMenuOpen);
         }
 
         public void ReturnMainMenu()
