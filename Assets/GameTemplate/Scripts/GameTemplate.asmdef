@@ -13,7 +13,8 @@
         "UniTask",
         "UniTask.Addressables",
         "ToolbarExtender.Editor",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "DayNightCycle"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

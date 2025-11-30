@@ -1,3 +1,4 @@
+using DayNightCycle;
 using GameTemplate.Scripts.Systems.Audio;
 using GameTemplate.Scripts.UI.Game;
 using GameTemplate.Scripts.UI.Game.EscapeMenu;
@@ -6,10 +7,9 @@ using VContainer.Unity;
 
 namespace GameTemplate.Scripts.Scopes
 {
-    public class GameScope : GameStateScope
+    public class GameScope : LifetimeScope
     {
-        public override bool Persists => false;
-        public override GameState ActiveState => GameState.Game;
+        public TimeSettingsSO timeSettingsSo;
         
         protected override void Configure(IContainerBuilder builder)
         {
@@ -20,6 +20,10 @@ namespace GameTemplate.Scripts.Scopes
             
             builder.RegisterEntryPoint<EscapeCanvasController>(Lifetime.Scoped);
             builder.RegisterComponentInHierarchy<EscapeCanvasView>();
+
+            builder.RegisterInstance(timeSettingsSo);
+            builder.Register<TimeService>(Lifetime.Scoped).AsSelf().AsImplementedInterfaces().As<ITickable>();
+            builder.RegisterComponentInHierarchy<TimeView>();
             
             // Register the MenuMusicStarter as an entry point
             // VContainer will instantiate this class and call its Start() method.

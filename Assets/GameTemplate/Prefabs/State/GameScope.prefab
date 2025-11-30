@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: GameTemplate.Scripts.Core.Scopes.ApplicationScope
+    TypeName: GameTemplate.Scripts.Scopes.ApplicationScope
   autoRun: 1
   autoInjectGameObjects: []
-  uiGameCanvas: {fileID: 0}
+  timeSettingsSo: {fileID: 11400000, guid: c11df7fa6ef56d44fbc4cd49be86cdd4, type: 2}
